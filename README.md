@@ -12,4 +12,15 @@
 
 可惜能力有限，无法改变现状（如果怼的话，相信老师会让我考虑自己的前途的），只能做一个整合平台，尽力用最直观的方式让人了解作业的布置情况。
 
+## 如何使用
+
+1. 在你的服务器上安装MySQL，并使用`database.sql`中的DDL语句定义一张表
+2. 在你的服务器上运行`server.py`，使用方法为：
+
+   ``` sh
+   server.py --host=<db_host> --user=<db_user> --passwd=<db_password> --dbname=<db_name> --port=<server_port>
+   ```
+
+3. 把`index.html`和`js`文件夹上传到http服务器的站点目录下
+
 [实例](http://homework.qh2333.com/)

@@ -10,6 +10,9 @@ app = flask.Flask(__name__)
 db_host = "localhost"
 db_user = "root"
 db_passwd = "pwd"
+db_name = "homework"
+
+server_port = 7777
 
 @app.route("/data")
 def data():
@@ -24,7 +27,7 @@ def get_json():
     return_list = []
 
     conn = mysql.connector.connect(
-        user=db_user, host=db_host, password=db_passwd, database='homework')
+        user=db_user, host=db_host, password=db_passwd, database=db_name)
     for course in course_list:
         course_obj = {}
         course_obj["courseName"] = course
@@ -49,13 +52,13 @@ def get_json():
 if __name__ == '__main__':
     argv = sys.argv[1:]
     try:
-        opts, args = getopt.getopt(argv, "h", ["host=", "user=", "passwd="])
+        opts, args = getopt.getopt(argv, "h", ["host=", "user=", "passwd=", "dbname=", "port="])
     except getopt.GetoptError:
-        print('server.py --host=<db_host> --user=<db_user> --passwd=<db_password>')
+        print('server.py --host=<db_host> --user=<db_user> --passwd=<db_password> --dbname=<db_name> --port=<server_port>')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print('server.py --host=<db_host> --user=<db_user> --passwd=<db_password>')
+            print('server.py --host=<db_host> --user=<db_user> --passwd=<db_password> --dbname=<db_name> --port=<server_port>')
             sys.exit()
         elif opt == "--host":
             db_host = arg
@@ -63,5 +66,9 @@ if __name__ == '__main__':
             db_user = arg
         elif opt == "--passwd":
             db_passwd = arg
+        elif opt == "--dbname":
+            db_name = arg
+        elif opt == "--port":
+            server_port = int(arg)
 
-    app.run(host='0.0.0.0', port="7777")
+    app.run(host='0.0.0.0', port=server_port)
