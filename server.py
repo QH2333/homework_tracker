@@ -14,11 +14,31 @@ db_name = "homework"
 
 server_port = 7777
 
+
 @app.route("/data")
 def data():
     rst = flask.make_response(get_json())
     rst.headers['Access-Control-Allow-Origin'] = '*'
     return rst
+
+
+@app.route("/add", methods=['post', 'get'])
+def add():
+    conn = mysql.connector.connect(
+        user=db_user, host=db_host, password=db_passwd, database=db_name)
+    cursor = conn.cursor()
+    values = "0, '%s', '%s', '%s', '%s', '%s'" % (
+        flask.request.form['c_name'],
+        flask.request.form['assigntime'],
+        flask.request.form['detail'],
+        flask.request.form['deadline'],
+        flask.request.form['method'], )
+    cursor.execute("insert into homework_info values (%s)" % values)
+    conn.commit()
+    print("insert into homework_info values (%s)" % values)
+    cursor.close()
+    conn.close()
+    return "Success"
 
 
 def get_json():
@@ -52,7 +72,8 @@ def get_json():
 if __name__ == '__main__':
     argv = sys.argv[1:]
     try:
-        opts, args = getopt.getopt(argv, "h", ["host=", "user=", "passwd=", "dbname=", "port="])
+        opts, args = getopt.getopt(
+            argv, "h", ["host=", "user=", "passwd=", "dbname=", "port="])
     except getopt.GetoptError:
         print('server.py --host=<db_host> --user=<db_user> --passwd=<db_password> --dbname=<db_name> --port=<server_port>')
         sys.exit(2)

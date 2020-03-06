@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Timetable</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" />
+</head>
+
+<body>
+    <br />
+    <h1 class="text-center">New Assignment</h1>
+    <hr />
+
+    <div id="data" class="container-sm">
+        <form action="http://homework.qh2333.com:7777/add" method="POST">
+        <!-- <form action="http://localhost:7777/add" method="POST"> -->
+            <p>课程名：</p>
+            <input type="text" name="c_name"/>
+            <br/>
+            <br/>
+            
+            <p>作业内容：</p>
+            <input type="text" name="detail"/>
+            <br/>
+            <br/>
+            
+            <p>布置时间：</p>
+            <input type="date" name="assigntime"/>
+            <br/>
+            <br/>
+            
+            <p>截止时间：</p>
+            <input type="datetime-local" name="deadline"/>
+            <br/>
+            <br/>
+            
+            <p>提交方式：</p>
+            <input type="text" name="method"/>
+            <br/>
+            <br/>
+
+            <button type="submit">提交</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/popper.min.js" type="module"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>
