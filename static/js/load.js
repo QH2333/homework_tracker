@@ -31,6 +31,10 @@ function loadData() {
     var request = new XMLHttpRequest();
     request.onreadystatechange = function () {
         if (request.readyState == 4 && request.status == 200) {
+            if (request.responseText == "DB Error") {
+                alert("Database error!");
+                return;
+            }
             var response = JSON.parse(request.responseText);
             var courseid = 0;
             for (var course of response) {
@@ -79,7 +83,7 @@ function loadData() {
             }
         }
     }
-    request.open("GET", "http://homework.qh2333.com:7777/data", true);
+    request.open("GET", "/data", true);
     request.send();
 }
 
