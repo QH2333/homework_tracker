@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Timetable</title>
+    <title>New Assignment</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" />
@@ -14,14 +14,21 @@
     <hr />
 
     <div id="data" class="container-sm">
-        <form action="/insert" method="POST">
+        <form id="mainform" action="/insert" method="POST">
             <p>课程名：</p>
-            <input type="text" name="c_name"/>
+            <!-- <input type="text" name="c_name"/> -->
+            <select name="c_name" form="mainform">
+                <option value ="Search Engine">Search Engine</option>
+                <option value ="Embedded System">Embedded System</option>
+                <option value="Multimedia">Multimedia</option>
+                <option value="Database">Database</option>
+                <option value="毛概">毛概</option>
+              </select>
             <br/>
             <br/>
             
             <p>作业内容：</p>
-            <input type="text" name="detail"/>
+            <textarea name="detail" form="mainform"></textarea>
             <br/>
             <br/>
             
