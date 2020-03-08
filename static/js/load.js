@@ -89,7 +89,7 @@ function loadData() {
 
 function createAssignment(assignment) {
     // Assignment detail
-    var assignDetail = createSimpleElement("p", null, null);
+    var assignDetail = createSimpleElement("pre", null, null);
     assignDetail.innerHTML = assignment.detail;
     // Submit: Method&Time (Assignment footer)
     var submitMethod = createSimpleElement("span", "badge badge-pill badge-primary", "Submit Method: " + assignment.method);
