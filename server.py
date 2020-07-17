@@ -6,8 +6,8 @@ import json
 import flask
 import mysql.connector
 
-application = flask.Flask(__name__)
 
+# Read configurations
 app_conf = {"db_host": 'localhost',
             "db_user": 'root',
             "db_passwd": 'pwd',
@@ -22,14 +22,13 @@ else:
     print("\033[1;31mError: No configuration file found!\033[0m")
     sys.exit(-1)
 
+
+application = flask.Flask(__name__)
+
+# Register routes
 @application.route("/")
 def index():
     return flask.render_template('index.html')
-
-
-@application.route("/timetable")
-def timetable():
-    return flask.render_template('timetable.html')
 
 
 @application.route("/add")
@@ -96,5 +95,7 @@ def get_json():
     except:
         return "DB Error"
 
+
 if __name__ == '__main__':
+    # Run the app
     application.run(host='0.0.0.0', port=app_conf["server_port"])
