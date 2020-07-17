@@ -1,4 +1,5 @@
 import sys
+import os.path
 import getopt
 import datetime
 import json
@@ -7,13 +8,19 @@ import mysql.connector
 
 application = flask.Flask(__name__)
 
-db_host = "localhost"
-db_user = "root"
-db_passwd = "pwd"
-db_name = "homework"
+app_conf = {"db_host": 'localhost',
+            "db_user": 'root',
+            "db_passwd": 'pwd',
+            "db_name": 'homework',
+            "server_port": 7777}
 
-server_port = 7777
-
+server_dir = os.path.dirname(os.path.abspath(__file__))
+if (os.path.exists(os.path.join(server_dir, "config.json"))):
+    with open(os.path.join(server_dir, "config.json")) as f:
+        app_conf = json.loads(f.read())
+else:
+    print("\033[1;31mError: No configuration file found!\033[0m")
+    sys.exit(-1)
 
 @application.route("/")
 def index():
@@ -41,7 +48,7 @@ def data():
 def insert():
     try:
         conn = mysql.connector.connect(
-            user=db_user, host=db_host, password=db_passwd, database=db_name)
+            user=app_conf["db_user"], host=app_conf["db_host"], password=app_conf["db_passwd"], database=app_conf["db_name"])
         cursor = conn.cursor()
         values = "0, '%s', '%s', '%s', '%s', '%s'" % (
             flask.request.form['c_name'],
@@ -66,7 +73,7 @@ def get_json():
 
     try:
         conn = mysql.connector.connect(
-            user=db_user, host=db_host, password=db_passwd, database=db_name)
+            user=app_conf["db_user"], host=app_conf["db_host"], password=app_conf["db_passwd"], database=app_conf["db_name"])
         for course in course_list:
             course_obj = {}
             course_obj["courseName"] = course
@@ -89,28 +96,5 @@ def get_json():
     except:
         return "DB Error"
 
-
 if __name__ == '__main__':
-    argv = sys.argv[1:]
-    try:
-        opts, args = getopt.getopt(
-            argv, "h", ["host=", "user=", "passwd=", "dbname=", "port="])
-    except getopt.GetoptError:
-        print('server.py --host=<db_host> --user=<db_user> --passwd=<db_password> --dbname=<db_name> --port=<server_port>')
-        sys.exit(2)
-    for opt, arg in opts:
-        if opt == '-h':
-            print('server.py --host=<db_host> --user=<db_user> --passwd=<db_password> --dbname=<db_name> --port=<server_port>')
-            sys.exit()
-        elif opt == "--host":
-            db_host = arg
-        elif opt == "--user":
-            db_user = arg
-        elif opt == "--passwd":
-            db_passwd = arg
-        elif opt == "--dbname":
-            db_name = arg
-        elif opt == "--port":
-            server_port = int(arg)
-
-    application.run(host='0.0.0.0', port=server_port)
+    application.run(host='0.0.0.0', port=app_conf["server_port"])

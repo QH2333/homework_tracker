@@ -1,0 +1,5 @@
+# Working dir of VS Code
+.vscode
+
+# The config file of server, containing real IP and passwords
+config.json
