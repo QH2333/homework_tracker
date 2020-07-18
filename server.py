@@ -39,7 +39,6 @@ def add():
 @application.route("/data")
 def data():
     rst = flask.make_response(get_json())
-    rst.headers['Access-Control-Allow-Origin'] = '*'
     return rst
 
 
